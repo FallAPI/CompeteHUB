@@ -1,4 +1,4 @@
-interface ICompetetions {
+interface ICompetitions {
     id: number;
     name: string;
     description: string;
@@ -8,15 +8,15 @@ interface ICompetetions {
     updatedAt: Date;
 }
 
-class Competetions{
+class Competitions{
     constructor(
         public id:number,
         public name:string,
         public description:string,
         public startDate:Date,
         public endDate:Date,
-        public createdAt:Date,
-        public updatedAt:Date
+        public createdAt?:Date,
+        public updatedAt?:Date
     )
     {}
 
@@ -31,17 +31,17 @@ class Competetions{
             updatedAt: this.updatedAt
         };
     }
-    static fromJSON(json: any): Competetions{
-        return new Competetions(
+    static fromJSON(json: any): Competitions{
+        return new Competitions(
             json.id,
             json.name,
             json.description,
             new Date(json.startDate),
             new Date(json.endDate),
-            new Date(json.createdAt),
-            new Date(json.updatedAt)
+            json.created_at ? new Date(json.created_at) : undefined,
+            json.updated_at ? new Date(json.updated_at) : undefined,
         );
     }
 }
 
-export {Competetions, ICompetetions};
+export {Competitions, ICompetitions};

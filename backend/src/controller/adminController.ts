@@ -46,17 +46,6 @@ export class AdminAuth{
         };
     };
 
-      static async LogoutAdmin(req: Request, res: Response): Promise<Response | void> {
-          // Let the client handle deleting the JWT
-        try {
-            res.status(200).json({
-                message: "Logout successful"
-            });
-        } catch (error) {
-            console.error("Error logging out admin:", error);
-            res.status(500).json({ message: "Internal server error" });
-        };
-    };
 
 }
 
