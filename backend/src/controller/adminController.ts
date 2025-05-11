@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import e, { NextFunction, Request, Response } from "express";
 import AdminService from "../services/adminService";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -10,7 +10,10 @@ const JWT_SECRET = process.env.JWT_SECRET as string;
 export class AdminAuth{
      static async LoginAdmin(req: Request, res: Response): Promise<Response | void> {
         try {
-            const {email, password} = req.body;
+            let {email, password} = req.body;
+
+            email = email.toLowerCase();
+            
 
             if(!email || !password){
                 return res.status(400).json({
