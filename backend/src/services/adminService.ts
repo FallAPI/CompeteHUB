@@ -6,7 +6,7 @@ import { RowDataPacket } from 'mysql2';
 export default class AdminService{
     static async findbyEmail(email : string): Promise<Admin | null>{
         const [rows] = await pool.query<IAdmin[] & RowDataPacket[]>(
-            "SELECT * FROM tbl_admin WHERE email = ? LIMIT 1",
+            "SELECT * FROM tbl_admin WHERE email = ?",
             [email]
         );
         return rows.length > 0 ? Admin.fromJSON(rows[0]) : null;

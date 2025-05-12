@@ -1,10 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-import jwt from "jsonwebtoken";
-import {NextFunction, Request, Response } from "express";
-
-export const JWT_SECRET = process.env.JWT_SECRET as string;
+import { Request, Response, NextFunction } from 'express';
+import { verifyAccesToken } from '../utils/tokenUtils';
 
 export class middlewareAuth{
     static async AuthMiddleware(req: Request, res: Response, next: NextFunction): Promise<Response |void> {
@@ -21,8 +16,8 @@ export class middlewareAuth{
     }
 
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
-        (req as any).admin = decoded;
+        const payload = verifyAccesToken(token);
+        (req as any).admin = payload;
         next();
     } catch (error) {
         return res.status(403).json({
