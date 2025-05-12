@@ -1,10 +1,12 @@
+const accessToken = null;
+
 document.addEventListener("DOMContentLoaded", function(){
-    const base_url = "http://localhost:4000"
+    const base_url = "http://localhost:4000";
     const loginForm = document.getElementById("loginForm");
     const errorBox = document.getElementById("error-message");
 
-    loginForm.addEventListener('submit', async function(e){
-        e.preventDefault();
+    loginForm.addEventListener('submit', async function(event){
+        event.preventDefault();
 
         const email = document.getElementById("inputEmail").value.trim().toLowerCase();
         const password = document.getElementById("inputPassword").value.trim();
@@ -26,13 +28,13 @@ document.addEventListener("DOMContentLoaded", function(){
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({email, password}),
+                credentials: 'include'
             });
 
             const data = await response.json();
             
             if(response.ok){
-                localStorage.setItem("token", data.token);
-                console.log("Token saved:", localStorage.getItem("token"));
+                accessToken = data.token;
 
                 window.location.href = "dashboard.html"
             }else{
