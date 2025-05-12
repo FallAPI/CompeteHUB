@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
-import CompetetionsService from "../services/CompetitionsService";
-import { Competitions } from "../models/Competitions";
+import { NextFunction, Request, Response } from "express";
+import CompetetionsService from "../services/competitionsService";
+import { Competitions } from "../models/competitions";
+import { DateTime } from 'luxon';
 
 
 export class CompetitionsController {
@@ -14,20 +15,26 @@ export class CompetitionsController {
                 });
             }
 
-            const date = new Date();
+            const localstartDate = DateTime.fromISO(startDate, {
+                "zone" : "Asia/Jakarta",
+            }).toJSDate();
+
+            const localEndDate = DateTime.fromISO(endDate, {
+                zone: "Asia/Jakarta"
+            }).toJSDate();
 
             const competetion = new Competitions(
                     0,
                     name,
                     description,
-                    new Date(startDate),
-                    new Date(endDate),
+                    localstartDate,
+                    localEndDate,
             );
 
             const createdCompetetion = await CompetetionsService.create(competetion);
             res.status(201).json({
                 message: "Competetion created successfully",
-                competetion: createdCompetetion.toJSON(),
+                competition: createdCompetetion.toJSON(),
             });
 
         }catch (error) {            
@@ -39,6 +46,7 @@ export class CompetitionsController {
     static async getCompetetions(req: Request, res: Response): Promise<Response | void> {
         try{
             const competetions = await CompetetionsService.findAll();
+            
             res.status(200).json({
                 message: "Competetions retrieved successfully",
                 competetions: competetions.map((competetion) => competetion.toJSON()),
@@ -68,7 +76,7 @@ export class CompetitionsController {
             };
 
             const updatedCompetetion = new Competitions(  
-                    competetion.id,
+                    competetion.id_competition,
                     name,
                     description,
                     new Date(startDate),
@@ -87,6 +95,22 @@ export class CompetitionsController {
             res.status(500).json({ message: "Internal server error" });
         }
     }
+
+    static async countCompetition(req: Request, res: Response): Promise<void>{
+        try {
+             const total = await CompetetionsService.countCompetition();
+            res.status(200).json({
+                message: "successfully count the competition",
+                total: total
+            })
+        } catch (error) {
+            console.error("error when count competition: " ,error)
+            res.status(500).json({
+                message: "initial server error"
+            });
+        }
+    }
+
     static async deleteCompetetion(req: Request, res: Response): Promise<Response | void> {
         try {
             const { id } = req.params;

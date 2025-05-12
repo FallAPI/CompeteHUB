@@ -1,5 +1,5 @@
 interface ICompetitions {
-    id: number;
+    id_competition: number;
     name: string;
     description: string;
     startDate: Date;
@@ -10,7 +10,7 @@ interface ICompetitions {
 
 class Competitions{
     constructor(
-        public id:number,
+        public id_competition:number,
         public name:string,
         public description:string,
         public startDate:Date,
@@ -22,7 +22,7 @@ class Competitions{
 
     toJSON(){
         return{
-            id: this.id,
+            id_competition: this.id_competition,
             name: this.name,
             description: this.description,
             startDate: this.startDate,
@@ -33,11 +33,11 @@ class Competitions{
     }
     static fromJSON(json: any): Competitions{
         return new Competitions(
-            json.id,
+            json.id_competition,
             json.name,
             json.description,
-            new Date(json.startDate),
-            new Date(json.endDate),
+            new Date(json.start_date),
+            new Date(json.end_date),
             json.created_at ? new Date(json.created_at) : undefined,
             json.updated_at ? new Date(json.updated_at) : undefined,
         );
