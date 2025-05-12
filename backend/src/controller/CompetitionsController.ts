@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import CompetetionsService from "../services/competitionsService";
 import { Competitions } from "../models/competitions";
 import { DateTime } from 'luxon';
@@ -11,7 +11,7 @@ export class CompetitionsController {
             
             if(!name || !description || !startDate || !endDate){
                 return res.status(400).json({
-                    message: "all fields are required",
+                    message: "All fields are required",
                 });
             }
 
@@ -84,7 +84,7 @@ export class CompetitionsController {
                     competetion.createdAt,
                 );
 
-             const NewUpdatedCompetetion = await CompetetionsService.update(updatedCompetetion);
+             await CompetetionsService.update(updatedCompetetion);
              res.status(200).json({
                 message: "Success updated competetion",
              })
@@ -100,13 +100,13 @@ export class CompetitionsController {
         try {
              const total = await CompetetionsService.countCompetition();
             res.status(200).json({
-                message: "successfully count the competition",
+                message: "Successfully count the competition",
                 total: total
             })
         } catch (error) {
-            console.error("error when count competition: " ,error)
+            console.error("Error when count competition: " ,error)
             res.status(500).json({
-                message: "initial server error"
+                message: "Initial server error"
             });
         }
     }

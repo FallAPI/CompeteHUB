@@ -6,7 +6,7 @@ export default class CompetitionsService {
     
     static async findById(id: number): Promise<Competitions | null> {
         const [rows] = await pool.query<ICompetitions[] & RowDataPacket[]>(
-            "SELECT * FROM tbl_competition WHERE id_competition = ? LIMIT 1",
+            "SELECT * FROM tbl_competition WHERE id_competition = ?",
             [id]
         );
         return rows.length > 0 ? Competitions.fromJSON(rows[0]) : null;
