@@ -7,11 +7,11 @@ export default class participantService{
         const [result] = await pool.query<ResultSetHeader>(
             "INSERT INTO tbl_participant (team_name, captain_email, first_member, second_member, competition_id) VALUES (?, ?, ?, ?, ?)",
             [
-                participant.teamName,
-                participant.captainEmail,
-                participant.firstMembers,
-                participant.secondMembers,
-                participant.competitionId
+                participant.team_name,
+                participant.captain_email,
+                participant.first_member,
+                participant.second_member,
+                participant.competition_id
             ]
         );
         participant.participant_id = result.insertId;
@@ -20,7 +20,7 @@ export default class participantService{
 
     static async findAll(): Promise<Participant[]>{
         const [rows] = await pool.query<IParticipant[] & RowDataPacket[]>(
-            "SELECT * FROM tbl_participant"
+            "SELECT participant_id, team_name, captain_email, first_member, second_member,tbl_competition.name FROM tbl_participant INNER JOIN tbl_competition ON tbl_participant.competition_id = tbl_competition.id_competition"
         );
         return rows.map((row) => Participant.fromJSON(row));
     }
@@ -29,11 +29,11 @@ export default class participantService{
         await pool.query<ResultSetHeader>(
             "UPDATE tbl_participant SET team_name = ?, captain_email = ?, first_member = ?, second_member = ?, competition_id = ?",
             [
-                participant.teamName,
-                participant.captainEmail,
-                participant.firstMembers,
-                participant.secondMembers,
-                participant.competitionId
+                participant.team_name,
+                participant.captain_email,
+                participant.first_member,
+                participant.second_member,
+                participant.competition_id
             ]
         );
     }
@@ -50,5 +50,10 @@ export default class participantService{
             [id]
         );
         return rows.length > 0 ? Participant.fromJSON(rows[0]): null;
+    }
+
+    static async getAllCompetitions(): Promise<{ id_competition: number, name: string }[]> {
+        const [rows] = await pool.query("SELECT id_competition, name FROM tbl_competition");
+        return rows as { id_competition: number, name: string }[];
     }
 }

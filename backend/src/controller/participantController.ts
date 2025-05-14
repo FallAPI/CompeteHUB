@@ -6,25 +6,23 @@ import { ValidateEmail } from "../utils/validationUtils";
 export class ParticipantController{
     static async createParticipant(req: Request, res: Response): Promise<Response | void>{
         try {
-            let {teamName, captainEmail, firstMember, secondMember, competitionId} = req.body;
-            captainEmail.toLowerCase();
-
+            const {teamName, captainEmail, firstMember, secondMember, competitionId} = req.body;
+            
         if(!teamName || !captainEmail || !firstMember || !secondMember || !competitionId){
-            res.status(400).json({
+            return res.status(400).json({
                 message: "all fields are required"
             });
         }
             //validate email and password
             if(!ValidateEmail(captainEmail)){
-                res.status(400).json({
+                return res.status(400).json({
                     error: "invalid email address",
                     details: "please use a valid address"
                 });
-                return;
+                
             }
 
-
-            const Addparticipant = new Participant(
+            const participant = new Participant(
                 0,
                 teamName,
                 captainEmail, 
@@ -33,7 +31,7 @@ export class ParticipantController{
                 competitionId
             );
 
-            const createdParticipant = await participantService.create(Addparticipant);
+            const createdParticipant = await participantService.create(participant);
             res.status(201).json({
                 message: "new participant created",
                 participant: createdParticipant.toJSON(),
@@ -61,11 +59,20 @@ export class ParticipantController{
         }
     }
 
+    static async getCompetitionName(req: Request, res: Response): Promise<void>{
+        try {
+            const competitions = await participantService.getAllCompetitions();
+            res.status(200).json({competitions});
+        } catch (error) {
+            res.status(500).json({ message: "Error fetching competitions" });
+        }
+    }
+
     static async updateParticipant(req: Request, res: Response): Promise<Response | void>{
         try {
             const {id} = req.params;
             let {teamName, captainEmail, firstMember, secondMember, competitionId} = req.body;
-            captainEmail = captainEmail.toLowerCase();
+
 
             if(!id){
                 return res.status(400).json({message: "ID is required"});
