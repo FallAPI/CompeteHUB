@@ -111,6 +111,36 @@ export class CompetitionsController {
         }
     }
 
+    static async countOngoinCompetition(req: Request, res: Response): Promise<void>{
+        try {
+            const total = await CompetetionsService.countOngoingCompetition();
+            res.status(200).json({
+                message: "Successfully count the competition",
+                total: total
+            })
+        } catch (error) {
+            console.error("Error when count competition: " ,error)
+            res.status(500).json({
+                message: "Initial server error"
+            });
+        }
+    }
+
+    static async countFinishedCompetition(req: Request, res: Response): Promise<void>{
+        try {
+            const total = await CompetetionsService.countFinishCompetition();
+            res.status(200).json({
+                message: "Successfully count the competition",
+                total: total
+            })
+        } catch (error) {
+            console.error("Error when count competition: " ,error)
+            res.status(500).json({
+                message: "Initial server error"
+            });
+        }
+    }
+
     static async deleteCompetetion(req: Request, res: Response): Promise<Response | void> {
         try {
             const { id } = req.params;

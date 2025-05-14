@@ -68,6 +68,21 @@ export class ParticipantController{
         }
     }
 
+    static async countTotalParticipant(req: Request, res: Response): Promise<void>{
+        try {
+            const total = await  participantService.countAllParticipant();
+            res.status(200).json({
+                message: "Successfully count the participant",
+                total: total
+            })
+        } catch (error) {
+            console.error("Error when count competition: " ,error)
+            res.status(500).json({
+                message: "Initial server error"
+            });
+        }
+    }
+
     static async updateParticipant(req: Request, res: Response): Promise<Response | void>{
         try {
             const {id} = req.params;
@@ -105,8 +120,7 @@ export class ParticipantController{
         } catch (error) {
             console.error("Error updating competetion:", error);
             res.status(500).json({ message: "Internal server error" });
-        }
-            
+        }       
     }
 
     static async deleteParticipant(req: Request, res: Response): Promise<Response | void>{

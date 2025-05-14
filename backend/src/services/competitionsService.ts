@@ -14,7 +14,7 @@ export default class CompetitionsService {
 
     static async findAll(): Promise<Competitions[]> {
         const [rows] = await pool.query<ICompetitions[] & RowDataPacket[]>(
-            "SELECT * FROM tbl_competition"
+            "SELECT * FROM tbl_competition ORDER BY id_competition DESC"
         );
         return rows.map((row) => Competitions.fromJSON(row));
     }
@@ -47,10 +47,25 @@ export default class CompetitionsService {
     }
 
     static async countCompetition(): Promise<number>{
-        const [rows]:any = await pool.query<any[]>(
+        const [rows] = await pool.query<any[]>(
             "SELECT COUNT(*) as total FROM tbl_competition"
         );
         return rows[0].total;
+    }
+
+    static async countFinishCompetition(): Promise<number>{
+        const [rows] = await pool.query<any[]>(
+            "SELECT COUNT(*) as total FROM tbl_competition WHERE DATE(end_date) <= CURDATE()"
+        );
+        return rows[0].total;
+    }
+
+    static async countOngoingCompetition(): Promise<number>{
+        const [rows] = await pool.query<any[]>(
+            "SELECT COUNT(*) as total FROM tbl_competition WHERE DATE(start_date) <= CURDATE() AND DATE(end_date) >= CURDATE();"
+        );
+
+        return rows[0].total
     }
 
     static async delete(id: number): Promise<void> {

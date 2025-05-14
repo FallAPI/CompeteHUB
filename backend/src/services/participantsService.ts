@@ -56,4 +56,11 @@ export default class participantService{
         const [rows] = await pool.query("SELECT id_competition, name FROM tbl_competition");
         return rows as { id_competition: number, name: string }[];
     }
+
+    static async countAllParticipant(): Promise<number>{
+        const [rows] = await pool.query<any[]>(
+            "SELECT COUNT(*) as total FROM tbl_participant"
+        );
+        return rows[0].total;
+    }
 }
