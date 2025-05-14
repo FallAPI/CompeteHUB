@@ -1,9 +1,8 @@
 
-
 document.getElementById("logoutBtn").addEventListener("click", async function (){
     const base_url = "http://localhost:4000";
     try {
-        const response = await fetch(`${base_url}/admin/api/logout`, {
+        const response = await fetch(`${base_url}/admin/logout`, {
             method: "POST",
             credentials: "include" // required to send the cookie
         });

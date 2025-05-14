@@ -1,4 +1,4 @@
-import e, { NextFunction, Request, Response } from "express";
+import {Request, Response } from "express";
 import AdminService from "../services/adminService";
 import { generateAccessToken, generateRefreshToken, verifyRefershToken } from '../utils/tokenUtils';
 import dotenv from "dotenv";
@@ -40,9 +40,9 @@ export class AdminAuth{
 
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
-                secure: true,
-                sameSite: "strict",
-                maxAge: 7 * 24 * 60 * 60 * 1000,
+                secure: false,
+                sameSite: "lax",
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
             })
 
             res.status(200).json({
@@ -62,16 +62,35 @@ export class AdminAuth{
 
         try {
             const payload = verifyRefershToken(token) as any;
-            const accesToken = generateAccessToken({id: payload.id, email: payload.email});
+            const accessToken = generateAccessToken({id: payload.id, email: payload.email});
 
-            res.status(200).json({accesToken});
+            console.log("Cookies from request:", req.cookies);
+            console.log("refreshToken value:", req.cookies.refreshToken);
+
+
+                // Set the access token in a cookie as well
+                res.cookie("accessToken", accessToken, {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: "lax",
+                    maxAge: 15 * 60 * 1000, // 15 minutes
+                });
+
+            res.status(200).json({accessToken});
         } catch (error) {
+            console.error("Refresh token verification failed:", error);
             res.status(403).json({ message: "Invalid refresh token" });
         };
     }
 
     static async logout(req: Request, res: Response): Promise<Response | void> {
-        res.clearCookie("refershToken")
+        res.clearCookie("refreshToken", {
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+        });
+
+        return res.status(200).json({ message: "Logout successful" });
     }
 
 

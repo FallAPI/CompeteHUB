@@ -5,20 +5,20 @@ dotenv.config();
 
 
 const ACCESS_SECRET =  process.env.ACCEST_SECRET!;
-const REFRESH_TOKEN = process.env.REFRESH_SECRET!;
+const REFRESH_SECRET = process.env.REFRESH_SECRET!;
 
 export const generateAccessToken = (payload: object) => {
     return jwt.sign(payload, ACCESS_SECRET, {expiresIn: "15m"});
 };
 
 export const generateRefreshToken = (payload: object) => {
-    return jwt.sign(payload, REFRESH_TOKEN, { expiresIn: '7d' });
+    return jwt.sign(payload, REFRESH_SECRET, { expiresIn: '7d' });
 };
 
 export const verifyRefershToken = (Token: string) => {
-    jwt.verify(Token, REFRESH_TOKEN);
+   return jwt.verify(Token, REFRESH_SECRET);
 };
 
 export const verifyAccesToken = (Token: string) => {
-    jwt.verify(Token, ACCESS_SECRET);
+   return jwt.verify(Token, ACCESS_SECRET);
 };

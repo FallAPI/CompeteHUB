@@ -1,16 +1,11 @@
+import { ensureAuthenticated } from './authGuard.js';
 
 document.addEventListener("DOMContentLoaded", async() => {
-    const token = localStorage.getItem("token");
-    const logoutBtn = document.getElementById("logoutBtn");
-    if(logoutBtn){
-        logoutBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            localStorage.removeItem("token");
-            window.location.href = "login.html"
-        })
-    }
-
+    const token =  await ensureAuthenticated();
     const base_url = "http://localhost:4000"
+    if(!token) return;
+
+    document.body.classList.remove('hidden');
 
     try {
         const response = await fetch(`${base_url}/admin/dashboard`, {

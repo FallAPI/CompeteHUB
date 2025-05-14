@@ -1,18 +1,27 @@
-import express from 'express';
-import cors from 'cors';
-import adminRoutes from './src/routes/adminRoutes';
-import competitionsRoutes from "./src/routes/CompetitionsRoutes";
+    import express from 'express';
+    import cors from 'cors';
+    import cookieParser from 'cookie-parser'; 
+    import adminRoutes from './src/routes/adminRoutes';
+    import competitionsRoutes from "./src/routes/competitionsRoutes";
+    import participantRoutes from "./src/routes/participantRoutes";
 
-const app = express();
-const PORT: number = 4000;
+    const corsOptions = {
+      origin: ['http://localhost:5501', 'http://127.0.0.1:5501'],
+      credentials: true,  
+    };
 
-app.use(cors());
-app.use(express.json());
+    const app = express();
+    const PORT: number = 4000;
+
+    app.use(cors(corsOptions));
+    app.use(express.json());
+    app.use(cookieParser());
 
 
-app.use('/admin', adminRoutes);
-app.use("/admin/api", competitionsRoutes);
+    app.use('/admin', adminRoutes);
+    app.use("/admin/api", competitionsRoutes);
+    app.use("/admin/api", participantRoutes)
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+    app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
+    });
