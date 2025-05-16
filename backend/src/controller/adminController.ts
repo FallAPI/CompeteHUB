@@ -5,7 +5,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
+const isProduction = process.env.NODE_ENV === 'production';
+
 
 export class AdminAuth{
      static async LoginAdmin(req: Request, res: Response): Promise<Response | void> {
@@ -40,10 +41,11 @@ export class AdminAuth{
 
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
-                secure: false,
-                sameSite: "lax",
+                secure: isProduction,
+                sameSite: isProduction ? "none" : "lax",
                 maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-            })
+              });
+              
 
             res.status(200).json({
                 message: "Login successful",
@@ -71,10 +73,11 @@ export class AdminAuth{
                 // Set the access token in a cookie as well
                 res.cookie("accessToken", accessToken, {
                     httpOnly: true,
-                    secure: false,
-                    sameSite: "lax",
+                    secure: isProduction,
+                    sameSite: isProduction ? "none" : "lax",
                     maxAge: 15 * 60 * 1000, // 15 minutes
-                });
+                  });
+                  
 
             res.status(200).json({accessToken});
         } catch (error) {
@@ -86,9 +89,10 @@ export class AdminAuth{
     static async logout(req: Request, res: Response): Promise<Response | void> {
         res.clearCookie("refreshToken", {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax",
-        });
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
+          });
+          
 
         return res.status(200).json({ message: "Logout successful" });
     }

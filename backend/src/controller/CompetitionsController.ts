@@ -57,6 +57,29 @@ export class CompetitionsController {
         }
     }
 
+    static async getCompetitionByID(req: Request, res: Response): Promise<Response | void>{
+        try {
+            const {id} = req.params
+            const competition = await CompetetionsService.findById(Number(id));
+
+            if(!id) {
+                return res.status(400).json({ message: "ID is required" });
+            };
+
+            if(!competition) {
+                return res.status(404).json({ message: "Competetion not found" });
+            };
+
+            res.status(200).json({
+                message: "Competetions retrieved successfully",
+                competition: competition.toJSON(),
+            })
+        } catch (error) {
+            console.error("Error updating competetion:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    }
+
     static async updateCompetetion(req: Request, res: Response): Promise<Response | void> {
         try {
             const {id} = req.params;

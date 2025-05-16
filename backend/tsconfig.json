@@ -2,10 +2,17 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "rootDir": "./",
-    "outDir": "./dist",
+    "outDir": "./dist",         // This will output to the `dist` folder
+    "rootDir": "./",            // The root directory of your project
     "esModuleInterop": true,
-    "moduleResolution": "node", 
-    "strict": true
-  }
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "app.ts",                   // Include the app.ts if it is outside the src folder
+    "other-file.ts"             // Include any other TypeScript files
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

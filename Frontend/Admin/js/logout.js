@@ -1,6 +1,6 @@
 
 document.getElementById("logoutBtn").addEventListener("click", async function (){
-    const base_url = "http://localhost:4000";
+    const base_url = "https://competehub-website.et.r.appspot.com";
     try {
         const response = await fetch(`${base_url}/admin/logout`, {
             method: "POST",

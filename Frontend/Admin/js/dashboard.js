@@ -2,7 +2,7 @@ import { ensureAuthenticated } from './authGuard.js';
 
 document.addEventListener("DOMContentLoaded", async() => {
     const token =  await ensureAuthenticated();
-    const base_url = "http://localhost:4000"
+    const base_url = "https://competehub-website.et.r.appspot.com"
     if(!token) return;
 
     document.body.classList.remove('hidden');
@@ -34,6 +34,45 @@ document.addEventListener("DOMContentLoaded", async() => {
              console.warn("Failed to fetch competition count.");
         }
         
+        const participantCount = await fetch(`${base_url}/admin/api/participant/total`)
+        if(participantCount){
+            const data = await participantCount.json();
+            const total = data.total;
+
+            const countElement = document.getElementById("participantCount");
+            if(countElement){
+                countElement.textContent = `${total} Participant`
+            }
+        }else{
+            console.warn("Failed to fetch participant count.");
+        }
+
+        const onGoingCount = await fetch(`${base_url}/admin/api/competition/ongoing`)
+        if(onGoingCount){
+            const data = await onGoingCount.json();
+            const total = data.total;
+
+            const countElement = document.getElementById("OnGoingCount");
+            if(countElement){
+                countElement.textContent = `${total} On-Going Competition`
+            }
+        }else{
+            console.warn("Failed to fetch competition count.");
+        }
+
+        const finishedCount = await fetch(`${base_url}/admin/api/competition/finish`)
+        if(finishedCount){
+            const data = await finishedCount.json();
+            const total = data.total;
+
+            const countElement = document.getElementById("FinishedCount");
+            if(countElement){
+                countElement.textContent = `${total} Finished Competition`
+            }
+        }else{
+            console.warn("Failed to fetch competition count.");
+        }
+
 
     } catch (error) {
         console.error("Error loading dashboard:", error);

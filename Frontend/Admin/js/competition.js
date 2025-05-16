@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:4000";
+const API_URL = "https://competehub-website.et.r.appspot.com";
 let dataTable = null;
 
 document.addEventListener("DOMContentLoaded", () => {

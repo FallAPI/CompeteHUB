@@ -1,7 +1,7 @@
     let accessToken = null;
 
     document.addEventListener("DOMContentLoaded", function(){
-        const base_url = "http://localhost:4000";
+        const base_url = "https://competehub-website.et.r.appspot.com";
         const loginForm = document.getElementById("loginForm");
         const errorBox = document.getElementById("error-message");
 

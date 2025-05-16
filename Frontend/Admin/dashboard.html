@@ -52,7 +52,7 @@
                         </a>
                         <div class="sb-sidenav-menu-heading">Data</div>
                         <a class="nav-link" href="participant_page.html">
-                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-people-group"></i></div>
                             Participant
                         </a>
                         <a class="nav-link" href="competition_page.html">
@@ -70,13 +70,14 @@
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
+                    <hr>
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
                                 <div class="card-body">
-                                    <h5>Total Competition</h5>
+                                    <h5><i class="fas fa-trophy me-2"></i>Total Competition</h5>
                                     <hr>
-                                    <h4 id="competitionCount"></h4>
+                                    <h4 id="competitionCount">0</h4>
                                 </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="competition_page.html">View
@@ -86,17 +87,26 @@
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Warning Card</div>
+                            <div class="card bg-info text-white mb-4">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-users me-2"></i>Total Participants</h5>
+                                    <hr>
+                                    <h4 id="participantCount">0</h4>
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <a class="small text-white stretched-link" href="participant_page.html">View
+                                        Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Success Card</div>
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body">
+                                    <h5><i class="fas fa-hourglass-half me-2"></i>On-Going Competition</h5>
+                                    <hr>
+                                    <h4 id="OnGoingCount">0</h4>
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="#">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -105,7 +115,11 @@
                         </div>
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">Danger Card</div>
+                                <div class="card-body">
+                                    <h5><i class="fas fa-flag-checkered me-2"></i>Finished Competition</h5>
+                                    <hr>
+                                    <h4 id="FinishedCount">0</h4>
+                                </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="#">View Details</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>

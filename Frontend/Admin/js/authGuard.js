@@ -1,6 +1,6 @@
 import { getToken, setToken, clearToken } from "./tokenMemory.js";
 
-const base_url = "http://localhost:4000";
+const base_url = "https://competehub-website.et.r.appspot.com";
 
 export async function ensureAuthenticated() {
     let token = getToken();
