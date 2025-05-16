@@ -1,0 +1,68 @@
+/* Umum */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Container untuk semua section */
+.container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* Header */
+h1, h2 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #0d6efd;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-link:hover {
+    color: #e2e6ea;
+}
+
+/* Card */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+    padding: 1rem;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+    background-color: #0d6efd;
+    color: white;
+    padding: 1.5rem 0;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 3rem;
+}
+
+footer p {
+    margin: 0;
+}

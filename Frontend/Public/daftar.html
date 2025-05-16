@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Daftar - CompeteHUB</title>
+
+  <!-- Google Fonts untuk Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    /* Tambahan margin atas agar konten tidak tertutup navbar */
+    main {
+      margin-top: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary px-3">
+    <div class="container-fluid">
+      <a class="navbar-brand fw-bold" href="index.html">CompeteHUB</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Beranda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="tentang-kami.html">Tentang Kami</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="daftar-kompetisi.html">Kompetisi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="daftar.html">Daftar</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Konten Utama -->
+  <main>
+    <div class="container">
+      <!-- Judul Halaman -->
+      <h2>Form Pendaftaran</h2>
+      <p class="text-muted">Isi formulir di bawah ini untuk mendaftar ke kompetisi yang tersedia.</p>
+
+      <!-- Formulir Pendaftaran -->
+      <form action="#" method="POST">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="teamName" class="form-label">Nama Tim</label>
+            <input type="text" class="form-control" id="teamName" name="team_name" placeholder="Masukkan nama tim" required>
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email Anda" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="anggota1" class="form-label">Nama Anggota 1</label>
+            <input type="text" class="form-control" id="anggota1" name="anggota1" placeholder="Masukkan nama lengkap" required>
+          </div>
+          <div class="col-md-6">
+            <label for="anggota2" class="form-label">Nama Anggota 2</label>
+            <input type="text" class="form-control" id="anggota2" name="anggota2" placeholder="Masukkan nama lengkap" required>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="competition" class="form-label">Pilih Kompetisi</label>
+          <select class="form-select" id="competition" name="competition" required>
+          </select>
+        </div>
+
+        <!-- Tombol Daftar di Tengah -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-success px-5">Daftar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-white py-4 mt-5">
+    <div class="container text-center">
+      <p class="mb-0">© 2025 CompeteHUB. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap & Script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="js/daftar.js"></script>
+
+</body>
+</html>

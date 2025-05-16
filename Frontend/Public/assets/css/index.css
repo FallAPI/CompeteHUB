@@ -1,0 +1,136 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Hero Section */
+.hero-section {
+    background-image: url('https://plus.unsplash.com/premium_photo-1663050844860-548dbfcc79a9?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* Overlay gelap agar teks terlihat */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+/* Teks hero */
+.hero-text {
+    z-index: 2;
+}
+
+.hero-text h1 {
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    font-size: 3rem;
+    line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Tentang Kami Section */
+.tentang-kami-section {
+    background-color: #fff;
+    color: #333;
+}
+
+/* CTA Section */
+section.text-center {
+    padding: 4rem 2rem;
+    background-color: #d0e8ff;
+    border-radius: 12px;
+    margin-top: 3rem;
+    color: #0d6efd;
+}
+
+section.text-center h2 {
+    font-weight: 600;
+}
+
+section.text-center p {
+    font-size: 18px;
+}
+
+section.text-center a.btn {
+    padding: 0.75rem 2rem;
+    font-size: 16px;
+    margin-top: 1rem;
+    background-color: #0d6efd;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+section.text-center a.btn:hover {
+    background-color: #0b5ed7;
+}
+
+/* Statistik */
+section.bg-light {
+    background-color: #f1f3f5;
+    border-radius: 12px;
+    margin-top: 3rem;
+}
+
+section.bg-light h2 {
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+section.bg-light .row .col {
+    padding: 1.5rem 0;
+}
+
+section.bg-light .col h3 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+/* Kompetisi Carousel */
+.carousel-item {
+    padding: 20px 0;
+}
+
+.carousel-inner .row {
+    margin: 0;
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Button Carousel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #0d6efd;
+    border-radius: 50%;
+    padding: 10px;
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .carousel-item .col-md-4 {
+        margin-bottom: 20px;
+    }
+}
