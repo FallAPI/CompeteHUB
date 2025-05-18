@@ -25,22 +25,35 @@ export default class participantService{
         return rows.map((row) => Participant.fromJSON(row));
     }
 
-    static async update(participant: Participant): Promise <void>{
-        await pool.query<ResultSetHeader>(
-            "UPDATE tbl_participant SET team_name = ?, captain_email = ?, first_member = ?, second_member = ?, competition_id = ?",
-            [
-                participant.team_name,
-                participant.captain_email,
-                participant.first_member,
-                participant.second_member,
-                participant.competition_id
-            ]
+    static async update(participant: Participant): Promise<void> {
+        //Check if the new captain_email exists in other records (excluding this participant)
+        const [existing] = await pool.query(
+          "SELECT participant_id FROM tbl_participant WHERE captain_email = ? AND participant_id != ?",
+          [participant.captain_email, participant.participant_id]
         );
-    }
+      
+        if ((existing as any[]).length > 0) {
+          throw new Error("captain_email already used by another participant");
+        }
+      
+        //Proceed with update if email is unique or unchanged
+        await pool.query<ResultSetHeader>(
+          "UPDATE tbl_participant SET team_name = ?, captain_email = ?, first_member = ?, second_member = ?, competition_id = ? WHERE participant_id = ?",
+          [
+            participant.team_name,
+            participant.captain_email,
+            participant.first_member,
+            participant.second_member,
+            participant.competition_id,
+            participant.participant_id,  
+          ]
+        );
+      }
+      
 
     static async delete(id: number): Promise<void>{
         await pool.query<ResultSetHeader>(
-            "DELETE FROM tbl_participan WHERE id = ?", [id]
+            "DELETE FROM tbl_participant WHERE participant_id = ?", [id]
         );
     }
 
@@ -59,7 +72,7 @@ export default class participantService{
 
     static async countAllParticipant(): Promise<number>{
         const [rows] = await pool.query<any[]>(
-            "SELECT COUNT(*) as total FROM tbl_participant"
+            "SELECT COUNT(*) AS total FROM tbl_participant"
         );
         return rows[0].total;
     }

@@ -9,6 +9,54 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 
 export class AdminAuth{
+   /**
+     * @swagger
+     * /admin/login:
+     *   post:
+     *     summary: Admin login
+     *     description: Logs in an admin and returns a JWT access token and sets refresh token in cookies.
+     *     tags:
+     *       - Admin Authentication
+     *     security: [] # This removes the global security requirement for this specific endpoint
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             required:
+     *               - email
+     *               - password
+     *             properties:
+     *               email:
+     *                 type: string
+     *                 example: Naufal@gmail.com
+     *               password:
+     *                 type: string
+     *                 example: NaufalAdmin12345
+     *     responses:
+     *       200:
+     *         description: Login successful
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                   example: Login successful
+     *                 token:
+     *                   type: string
+     *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+     *                 admin:
+     *                   $ref: '#/components/schemas/Admin'
+     *       400:
+     *         description: Email and password are required
+     *       401:
+     *         description: Invalid email or password
+     *       500:
+     *         description: Internal server error
+     */
      static async LoginAdmin(req: Request, res: Response): Promise<Response | void> {
         try {
             let {email, password} = req.body;
@@ -58,6 +106,31 @@ export class AdminAuth{
         };
     };
 
+    /**
+     * @swagger
+     * /admin/refresh-token:
+     *   post:
+     *     summary: Refresh access token
+     *     description: Refreshes the access token using the refresh token from cookies.
+     *     tags:
+     *       - Admin Authentication
+     *     security: [] # This removes the global security requirement for this specific endpoint
+     *     responses:
+     *       200:
+     *         description: Access token refreshed successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 accessToken:
+     *                   type: string
+     *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+     *       401:
+     *         description: No refresh token provided
+     *       403:
+     *         description: Invalid refresh token
+     */
     static async refreshToken(req: Request, res: Response): Promise<Response | void> {
         const token = req.cookies.refreshToken;
         if(!token) return res.status(401).json({message: "No refresh token"});
@@ -65,10 +138,6 @@ export class AdminAuth{
         try {
             const payload = verifyRefershToken(token) as any;
             const accessToken = generateAccessToken({id: payload.id, email: payload.email});
-
-            console.log("Cookies from request:", req.cookies);
-            console.log("refreshToken value:", req.cookies.refreshToken);
-
 
                 // Set the access token in a cookie as well
                 res.cookie("accessToken", accessToken, {
@@ -86,6 +155,26 @@ export class AdminAuth{
         };
     }
 
+    /**
+     * @swagger
+     * /admin/logout:
+     *   post:
+     *     summary: Admin logout
+     *     description: Logs out an admin by clearing the refresh token cookie.
+     *     tags:
+     *       - Admin Authentication
+     *     responses:
+     *       200:
+     *         description: Logout successful
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                   example: Logout successful
+     */
     static async logout(req: Request, res: Response): Promise<Response | void> {
         res.clearCookie("refreshToken", {
             httpOnly: true,

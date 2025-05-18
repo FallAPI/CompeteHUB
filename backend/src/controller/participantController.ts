@@ -3,7 +3,61 @@ import participantService from "../services/participantsService";
 import { Participant, IParticipant} from "../models/participant";
 import { ValidateEmail } from "../utils/validationUtils";
 
+/**
+ * @swagger
+ * tags:
+ *   name: Participants
+ *   description: Endpoints for managing participants
+ */
+
 export class ParticipantController{
+    /**
+     * @swagger
+     * /admin/api/participant:
+     *   post:
+     *     summary: Create a new participant
+     *     tags: [Participants]
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             required: [teamName, captainEmail, firstMember, secondMember, competitionId]
+     *             properties:
+     *               teamName:
+     *                 type: string
+     *                 description: Name of the team
+     *               captainEmail:
+     *                 type: string
+     *                 description: Email address of the team captain
+     *                 format: email
+     *               firstMember:
+     *                 type: string
+     *                 description: Name of the first team member
+     *               secondMember:
+     *                 type: string
+     *                 description: Name of the second team member
+     *               competitionId:
+     *                 type: integer
+     *                 description: ID of the competition
+     *     responses:
+     *       201:
+     *         description: Participant successfully created
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 participant:
+     *                   $ref: '#/components/schemas/Participant'
+     *       400:
+     *         description: Bad request - invalid input data
+     *       500:
+     *         description: Internal server error
+     */
     static async createParticipant(req: Request, res: Response): Promise<Response | void>{
         try {
             const {teamName, captainEmail, firstMember, secondMember, competitionId} = req.body;
@@ -45,6 +99,29 @@ export class ParticipantController{
         }
     }
 
+    /**
+     * @swagger
+     * /admin/api/participant:
+     *   get:
+     *     summary: Get all participants
+     *     tags: [Participants]
+     *     responses:
+     *       200:
+     *         description: List of participants retrieved successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 participant:
+     *                   type: array
+     *                   items:
+     *                     $ref: '#/components/schemas/Participant'
+     *       500:
+     *         description: Internal server error
+     */
     static async getParticipant(req: Request, res: Response): Promise<Response | void>{
         try {
             const participant = await participantService.findAll();
@@ -59,6 +136,32 @@ export class ParticipantController{
         }
     }
 
+    /**
+     * @swagger
+     * /admin/api/participant/competition:
+     *   get:
+     *     summary: Get all competitions
+     *     tags: [Participants]
+     *     responses:
+     *       200:
+     *         description: List of competitions retrieved successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 competitions:
+     *                   type: array
+     *                   items:
+     *                     type: object
+     *                     properties:
+     *                       id:
+     *                         type: integer
+     *                       name:
+     *                         type: string
+     *       500:
+     *         description: Internal server error
+     */
     static async getCompetitionName(req: Request, res: Response): Promise<void>{
         try {
             const competitions = await participantService.getAllCompetitions();
@@ -68,6 +171,28 @@ export class ParticipantController{
         }
     }
 
+    /**
+     * @swagger
+     * /admin/api/participant/total:
+     *   get:
+     *     summary: Get the total count of participants
+     *     tags: [Participants]
+     *     responses:
+     *       200:
+     *         description: Total number of participants retrieved successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 message:
+     *                   type: string
+     *                 total:
+     *                   type: integer
+     *                   description: Total number of participants
+     *       500:
+     *         description: Internal server error
+     */
     static async countTotalParticipant(req: Request, res: Response): Promise<void>{
         try {
             const total = await  participantService.countAllParticipant();
@@ -82,7 +207,54 @@ export class ParticipantController{
             });
         }
     }
-
+    
+    /**
+     * @swagger
+     * /admin/api/participant/{id}:
+     *   put:
+     *     summary: Update a participant by ID
+     *     tags: [Participants]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: integer
+     *         description: Participant ID
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             required: [teamName, captainEmail, firstMember, secondMember, competitionId]
+     *             properties:
+     *               teamName:
+     *                 type: string
+     *                 description: Name of the team
+     *               captainEmail:
+     *                 type: string
+     *                 description: Email address of the team captain
+     *                 format: email
+     *               firstMember:
+     *                 type: string
+     *                 description: Name of the first team member
+     *               secondMember:
+     *                 type: string
+     *                 description: Name of the second team member
+     *               competitionId:
+     *                 type: integer
+     *                 description: ID of the competition
+     *     responses:
+     *       200:
+     *         description: Participant updated successfully
+     *       400:
+     *         description: Missing required fields or invalid ID
+     *       404:
+     *         description: Participant not found
+     *       500:
+     *         description: Internal server error
+     */
     static async updateParticipant(req: Request, res: Response): Promise<Response | void>{
         try {
             const {id} = req.params;
@@ -123,6 +295,29 @@ export class ParticipantController{
         }       
     }
 
+    /**
+     * @swagger
+     * /admin/api/participant/{id}:
+     *   delete:
+     *     summary: Delete a participant by ID
+     *     tags: [Participants]
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: integer
+     *         description: ID of the participant to delete
+     *     responses:
+     *       200:
+     *         description: Participant deleted successfully
+     *       400:
+     *         description: ID is required
+     *       404:
+     *         description: Participant not found
+     *       500:
+     *         description: Internal server error
+     */
     static async deleteParticipant(req: Request, res: Response): Promise<Response | void>{
         try {
             const {id} = req.params;

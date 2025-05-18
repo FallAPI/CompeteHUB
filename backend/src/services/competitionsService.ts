@@ -46,23 +46,25 @@ export default class CompetitionsService {
         );
     }
 
-    static async countCompetition(): Promise<number>{
+    static async countCompetition(): Promise<number> {
         const [rows] = await pool.query<any[]>(
-            "SELECT COUNT(*) as total FROM tbl_competition"
+          "SELECT COUNT(*) AS total FROM tbl_competition"
         );
-        return rows[0].total;
-    }
+        console.log("Competition rows:", rows);
+        return Number(rows[0]?.total || 0);
+      }
+      
 
     static async countFinishCompetition(): Promise<number>{
         const [rows] = await pool.query<any[]>(
-            "SELECT COUNT(*) as total FROM tbl_competition WHERE DATE(end_date) <= CURDATE()"
+            "SELECT COUNT(*) AS total FROM tbl_competition WHERE DATE(end_date) <= CURDATE()"
         );
         return rows[0].total;
     }
 
     static async countOngoingCompetition(): Promise<number>{
         const [rows] = await pool.query<any[]>(
-            "SELECT COUNT(*) as total FROM tbl_competition WHERE DATE(start_date) <= CURDATE() AND DATE(end_date) >= CURDATE();"
+            "SELECT COUNT(*) AS total FROM tbl_competition WHERE DATE(start_date) <= CURDATE() AND DATE(end_date) >= CURDATE();"
         );
 
         return rows[0].total

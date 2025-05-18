@@ -1,6 +1,10 @@
     import express from 'express';
     import cors from 'cors';
+    import  SwaggerUi  from 'swagger-ui-express';
+    import { setupSwagger } from './src/swagger';
     import cookieParser from 'cookie-parser'; 
+
+
     import adminRoutes from './src/routes/adminRoutes';
     import competitionsRoutes from "./src/routes/competitionsRoutes";
     import participantRoutes from "./src/routes/participantRoutes";
@@ -17,7 +21,9 @@
     app.use(express.json());
     app.use(cookieParser());
 
+    setupSwagger(app);
 
+    
     app.use('/admin', adminRoutes);
     app.use("/admin/api", competitionsRoutes);
     app.use("/admin/api", participantRoutes)
