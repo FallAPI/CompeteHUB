@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
+
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daftar - CompeteHUB</title>
 
   <!-- Google Fonts untuk Poppins -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/style.css" />
 
   <style>
-    /* Tambahan margin atas agar konten tidak tertutup navbar */
     main {
       margin-top: 100px;
+      font-family: 'Poppins', sans-serif;
     }
   </style>
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -51,41 +54,44 @@
   <!-- Konten Utama -->
   <main>
     <div class="container">
-      <!-- Judul Halaman -->
       <h2>Form Pendaftaran</h2>
       <p class="text-muted">Isi formulir di bawah ini untuk mendaftar ke kompetisi yang tersedia.</p>
 
-      <!-- Formulir Pendaftaran -->
       <form action="#" method="POST">
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="teamName" class="form-label">Nama Tim</label>
-            <input type="text" class="form-control" id="teamName" name="team_name" placeholder="Masukkan nama tim" required>
+            <input type="text" class="form-control" id="teamName" name="team_name" placeholder="Masukkan nama tim"
+              required />
           </div>
           <div class="col-md-6">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email Anda" required>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan email Anda"
+              required />
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="anggota1" class="form-label">Nama Anggota 1</label>
-            <input type="text" class="form-control" id="anggota1" name="anggota1" placeholder="Masukkan nama lengkap" required>
+            <input type="text" class="form-control" id="anggota1" name="anggota1" placeholder="Masukkan nama lengkap"
+              required />
           </div>
           <div class="col-md-6">
             <label for="anggota2" class="form-label">Nama Anggota 2</label>
-            <input type="text" class="form-control" id="anggota2" name="anggota2" placeholder="Masukkan nama lengkap" required>
+            <input type="text" class="form-control" id="anggota2" name="anggota2" placeholder="Masukkan nama lengkap"
+              required />
           </div>
         </div>
 
         <div class="mb-3">
           <label for="competition" class="form-label">Pilih Kompetisi</label>
           <select class="form-select" id="competition" name="competition" required>
+            <option value="" disabled selected>-- Pilih kompetisi --</option>
+            <!-- Data akan ditambahkan dari daftar.js -->
           </select>
         </div>
 
-        <!-- Tombol Daftar di Tengah -->
         <div class="text-center">
           <button type="submit" class="btn btn-success px-5">Daftar</button>
         </div>
@@ -100,10 +106,11 @@
     </div>
   </footer>
 
-  <!-- Bootstrap & Script -->
+  <!-- Bootstrap Bundle + Script -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- Script Pengisian Dynamic Select -->
   <script src="js/daftar.js"></script>
-
 </body>
+
 </html>

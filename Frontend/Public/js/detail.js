@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     // Mengambil data detail kompetisi dari API sesuai ID
-    const res = await fetch(`${API_URL}/admin/api/competition/${id}`);
+    const res = await fetch(`${API_URL}/public/api/competition/${id}`);
     // Kalau responsenya tidak OK (gagal), lempar error
     if (!res.ok) throw new Error("Gagal mengambil detail kompetisi.");
 

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fungsi untuk mengambil daftar kompetisi dan menampilkan sebagai opsi dropdown
   async function loadCompetitionOptions(selectedId = null) {
     try {
-      const response = await fetch(`${API_URL}/admin/api/participant/competition`);
+      const response = await fetch(`${API_URL}/public/api/participant/competition`);
       const { competitions } = await response.json(); // Ambil array kompetisi
 
       // Kosongkan isi <select> dan tambahkan opsi default
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Kirim data ke server via POST
-      const res = await fetch(`${API_URL}/admin/api/participant`, {
+      const res = await fetch(`${API_URL}/public/api/participant`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),  // Konversi objek ke JSON string

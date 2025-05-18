@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   try {
     // Mengambil data kompetisi dari endpoint API secara asynchronous menggunakan fetch
-    const res = await fetch(`${API_URL}/admin/api/competition`);
+    const res = await fetch(`${API_URL}/public/api/competition`);
     // Jika response dari fetch tidak OK (misalnya 404, 500), maka lempar error
     if (!res.ok) throw new Error("Gagal mengambil data kompetisi.");
 
