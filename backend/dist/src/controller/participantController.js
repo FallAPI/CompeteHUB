@@ -25,7 +25,7 @@ const validationUtils_1 = require("../utils/validationUtils");
 class ParticipantController {
     /**
      * @swagger
-     * /admin/api/participant:
+     * /public/api/participant:
      *   post:
      *     summary: Create a new participant
      *     tags: [Participants]

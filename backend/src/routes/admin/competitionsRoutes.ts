@@ -1,6 +1,6 @@
 import express from 'express';
-import { CompetitionsController } from '../controller/competitionsController';
-import { middlewareAuth } from '../middleware/AuthMiddleware';
+import { CompetitionsController } from '../../controller/competitionsController';
+import { middlewareAuth } from '../../middleware/AuthMiddleware';
 
 const router = express.Router();
 router.use(middlewareAuth.AuthMiddleware as express.RequestHandler);

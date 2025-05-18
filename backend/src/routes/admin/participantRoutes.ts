@@ -1,12 +1,8 @@
 import express from 'express';
-import { ParticipantController } from '../controller/participantController';
-import { middlewareAuth } from '../middleware/AuthMiddleware';
+import { ParticipantController } from '../../controller/participantController';
+import { middlewareAuth } from '../../middleware/AuthMiddleware';
 
 const router = express.Router();
-
-// 👇 Public route
-router.post("/participant", ParticipantController.createParticipant as express.RequestHandler);
-
 
 router.use(middlewareAuth.AuthMiddleware as express.RequestHandler);
 
