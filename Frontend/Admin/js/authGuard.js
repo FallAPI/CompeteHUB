@@ -16,7 +16,7 @@ export async function ensureAuthenticated() {
             if(refershResponse.ok){
                 const data = await refershResponse.json();
                 token = data.accessToken;
-                console.log("Sending accessToken:", token);
+               
                 setToken(token);
             }else{
                 throw new error("refersh failed");
@@ -25,7 +25,7 @@ export async function ensureAuthenticated() {
         } catch (error) {
             console.warn("Authentication failed:", error);
             clearToken();
-            // window.location.href = "401.html"
+            window.location.href = "401.html"
             return null;
         }
     }

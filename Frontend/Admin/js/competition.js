@@ -1,7 +1,9 @@
-const API_URL = "https://competehub-website.et.r.appspot.com";
-let dataTable = null;
+import { ensureAuthenticated } from './authGuard.js';
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = await ensureAuthenticated();
+  const API_URL = "https://competehub-website.et.r.appspot.com";
+  let dataTable = null;
   const tableBody = document.querySelector("#competitionTable tbody");
   
   // Use event delegation for button clicks
@@ -27,11 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function fetchData() {
     try {
-      const res = await fetch(`${API_URL}/admin/api/competition`);
+      const res = await fetch(`${API_URL}/admin/api/competition` ,{
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      });
       if (!res.ok) throw new Error("Failed to fetch data");
 
       const data = await res.json();
-      console.log("Fetched Data:", data);
+    
 
       if (Array.isArray(data.competetions)) {
         renderTable(data.competetions);
@@ -77,7 +86,10 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(`${API_URL}/admin/api/competition/${competitionId}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+      },
       });
 
       if (response.ok) {
@@ -129,7 +141,10 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(`${API_URL}/admin/api/competition`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+      },
         body: JSON.stringify({ name, description, startDate, endDate })
       });
 
@@ -165,7 +180,10 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(`${API_URL}/admin/api/competition/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+      },
         body: JSON.stringify({ name, description, startDate, endDate }),
       });
 

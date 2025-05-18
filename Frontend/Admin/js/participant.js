@@ -1,7 +1,9 @@
-const API_URL = "https://competehub-website.et.r.appspot.com";
-let dataTable = null;
+import { ensureAuthenticated } from './authGuard.js';
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    const API_URL = "https://competehub-website.et.r.appspot.com";
+    let dataTable = null;
+    const token =  await ensureAuthenticated();
     const tableBody = document.querySelector("#ParticipantTable tbody");
 
     document.addEventListener("click", async (e) =>{
@@ -38,11 +40,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function fetchData() {
         try {
-            const res = await fetch(`${API_URL}/admin/api/participant`);
+            const res = await fetch(`${API_URL}/admin/api/participant`,{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                credentials: "include",
+                
+            });
             if(!res) throw new Error("Failed to fetch data");
 
             const data = await res.json();
-            console.log(data);
 
             if(Array.isArray(data.participant)){
                renderTable(data.participant);
@@ -93,7 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(`${API_URL}/admin/api/participant/${participantId}`, {
                 method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' }
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                
             });
 
             if(response.ok){
@@ -110,7 +123,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function loadCompetetionOptions(selectedId = null) {
-        const response = await fetch(`${API_URL}/admin/api/participant/competition`);
+        const response = await fetch(`${API_URL}/admin/api/participant/competition`,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
         const {competitions} = await response.json();
     
         const select = document.getElementById("updateCompetition");
@@ -167,7 +186,10 @@ document.addEventListener("DOMContentLoaded", () => {
           try {
             const response = await fetch(`${API_URL}/admin/api/participant/${participant_id}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
                 body:  JSON.stringify(updatedData),
             });
 

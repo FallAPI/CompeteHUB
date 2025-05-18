@@ -20,7 +20,12 @@ document.addEventListener("DOMContentLoaded", async() => {
         };
 
 
-        const countResponse = await fetch(`${base_url}/admin/api/competition/total`)
+        const countResponse = await fetch(`${base_url}/admin/api/competition/total`,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+
+        })
         
         if(countResponse.ok){
             const data = await countResponse.json();
@@ -34,7 +39,11 @@ document.addEventListener("DOMContentLoaded", async() => {
              console.warn("Failed to fetch competition count.");
         }
         
-        const participantCount = await fetch(`${base_url}/admin/api/participant/total`)
+        const participantCount = await fetch(`${base_url}/admin/api/participant/total`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
         if(participantCount){
             const data = await participantCount.json();
             const total = data.total;
@@ -47,7 +56,12 @@ document.addEventListener("DOMContentLoaded", async() => {
             console.warn("Failed to fetch participant count.");
         }
 
-        const onGoingCount = await fetch(`${base_url}/admin/api/competition/ongoing`)
+        const onGoingCount = await fetch(`${base_url}/admin/api/competition/ongoing`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        )
         if(onGoingCount){
             const data = await onGoingCount.json();
             const total = data.total;
@@ -60,7 +74,12 @@ document.addEventListener("DOMContentLoaded", async() => {
             console.warn("Failed to fetch competition count.");
         }
 
-        const finishedCount = await fetch(`${base_url}/admin/api/competition/finish`)
+        const finishedCount = await fetch(`${base_url}/admin/api/competition/finish`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        )
         if(finishedCount){
             const data = await finishedCount.json();
             const total = data.total;

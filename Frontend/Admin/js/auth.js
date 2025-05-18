@@ -35,7 +35,6 @@
                 
                 if(response.ok){
                     accessToken = data.token;
-                    console.log("Received accessToken:", accessToken);
 
                     window.location.href = "dashboard.html"
                 }else{
